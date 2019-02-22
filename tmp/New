@@ -1,0 +1,4 @@
+
+for i in range(6):
+    camera.capture('Camera samples/picture'+i+'.jpeg')
+    sleep(1)
