@@ -2,3 +2,14 @@
 for i in range(6):
     camera.capture('Camera samples/picture'+i+'.jpeg')
     sleep(1)
+
+
+,gmtime() 
+
+camera.start_preview()
+
+
+camera.stop_preview()
+
+
+%d-%m %H:%M %S'

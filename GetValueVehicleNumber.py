@@ -9,7 +9,7 @@ def Work(imagePath):
             'https://platerecognizer.com/api/plate-reader/',
             files=dict(upload=fp),
             headers={'Authorization': 'Token ' + API_TOKEN})
-    pprint(response.json())
+    #pprint(response.json())
     carNumber = response.json()['results'][0]['plate']
     # print("carNumber = ", carNumber)
     return carNumber

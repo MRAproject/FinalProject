@@ -1,4 +1,3 @@
-
 import GetValueVehicleNumber
 
 imagePath = 'image.jpeg'
