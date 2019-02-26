@@ -1,10 +1,11 @@
 import GetValueVehicleNumber
 from PIL import Image
 import glob
+import delete
 
-def Work():
+def Work(folder):
     image_list = []
-    for filename in glob.glob('Camera samples/*.jpeg'):
+    for filename in glob.glob(folder+'*.jpeg'):
         im = Image.open(filename)
         image_list.append(im.filename)
 
@@ -16,5 +17,6 @@ def Work():
         except:
             continue
         
-    print(VehicleNumber)       
+    print(VehicleNumber)
+    delete.Work(folder)
     exit()

@@ -1,9 +1,4 @@
-from picamera import PiCamera
-from time import gmtime,strftime,sleep
-import datetime
-import NimageProcessing
-import delete
-import threading
+from time import sleep
 from threading import Timer
 
 class RepeatedTimer(object):
@@ -30,20 +25,12 @@ class RepeatedTimer(object):
     def stop(self):
         self._timer.cancel()
         self.is_running = False
-
-
-camera = PiCamera()
-folder = 'Camera samples/'
-def Work():
-    print('insert')
-    for i in range(3):    
-        output = strftime(folder+'image-'+str(i)+'.jpeg')
-        camera.capture(output)
         
-    NimageProcessing.Work(folder)
+def hello(name):
+    print ('Hello '+ name)
 
 print('starting...')
-rt = RepeatedTimer(13, Work) # it auto-starts, no need of rt.start()
+rt = RepeatedTimer(5, hello, 'World') # it auto-starts, no need of rt.start()
 try:
     sleep(1000000) # your long-running job goes here...
 finally:
