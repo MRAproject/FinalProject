@@ -17,6 +17,7 @@ def Work(folder):
         except:
             continue
         
-    print(VehicleNumber)
+    #print(VehicleNumber)
     delete.Work(folder)
-    exit()
+    return(VehicleNumber)
+    #exit()

@@ -31,20 +31,39 @@ class RepeatedTimer(object):
         self._timer.cancel()
         self.is_running = False
 
+def SetLedRed():
+    print('Led red are show...')
 
+def SetLedGreen():
+    print('Led green are show...')
+   
+SetLedRed()
 camera = PiCamera()
-folder = 'Camera samples/'
+FOLDER = 'Camera samples/'
+
 def Work():
     print('insert')
-    for i in range(3):    
-        output = strftime(folder+'image-'+str(i)+'.jpeg')
+    for i in range(2):    
+        output = strftime(FOLDER+'image-'+str(i)+'.jpeg')
         camera.capture(output)
         
-    NimageProcessing.Work(folder)
-
+    response = NimageProcessing.Work(FOLDER)
+    print(response)
+    if(response != None):
+        rt.stop()
+        '''
+        backendResponse = #requst To Backend
+        if(backendResponse == 1):
+            SetLedGreen() #car are allowed
+        #else -> SetLedRed() are already working    
+        rt.start()
+        '''
+    
 print('starting...')
-rt = RepeatedTimer(13, Work) # it auto-starts, no need of rt.start()
+rt = RepeatedTimer(14, Work) # it auto-starts, no need of rt.start()
 try:
-    sleep(1000000) # your long-running job goes here...
+    sleep(10000000) # your long-running job goes here...
 finally:
     rt.stop() # better in a try/finally block to make sure the program ends!
+    
+
