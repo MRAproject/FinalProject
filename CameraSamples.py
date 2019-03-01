@@ -1,12 +1,9 @@
-from picamera import PiCamera
-from time import gmtime,strftime,sleep
-import datetime
 import NimageProcessing
 import delete
-import threading
-from threading import Timer
 import requests
-from pprint import pprint
+from picamera import PiCamera
+from time import strftime,sleep
+from threading import Timer
 
 class RepeatedTimer(object):
     def __init__(self, interval, function, *args, **kwargs):
@@ -51,7 +48,6 @@ def Work():
     
     print('Processing images..')
     carNumber = NimageProcessing.Work(FOLDER)
-    #carNumber = '3330023'
     if(carNumber != None):
         rt.stop()
         data = {"carNumber": carNumber}
@@ -72,15 +68,9 @@ def Work():
         rt.start()
     
 print('Starting...')
-rt = RepeatedTimer(17, Work) # it auto-starts, no need of rt.start()
+rt = RepeatedTimer(10, Work) # it auto-starts, no need of rt.start()
 try:
     sleep(1000000) # your long-running job goes here...
 finally:
     rt.stop()
-
-
-    
-#pprint(backendResponse.json())
-#pprint(backendResponse.json()['status'])
-
 

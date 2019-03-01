@@ -10,14 +10,11 @@ def Work(folder):
         image_list.append(im.filename)
 
     VehicleNumber = None
-
     for image in image_list:
         try:
             VehicleNumber = GetValueVehicleNumber.Work(image)
         except:
             continue
         
-    #print(VehicleNumber)
     delete.Work(folder)
     return(VehicleNumber)
-    #exit()
