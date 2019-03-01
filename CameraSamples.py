@@ -51,17 +51,24 @@ def Work():
     
     print('Processing images..')
     carNumber = NimageProcessing.Work(FOLDER)
+    #carNumber = '3330023'
     if(carNumber != None):
         rt.stop()
         data = {"carNumber": carNumber}
         print('car number:' + carNumber)
-        backendResponse = requests.get("http://10.100.102.15:3001/check_car", params=data)
-        print(backendResponse)
-        if(backendResponse.status_code == requests.codes.ok):            
-            if((backendResponse.json()['status']) == 1):
-                SetLedGreen()
-        else:
-            print('Car Number: '+ carNumber+' are not allowed!')
+        try:         
+            backendResponse = requests.get("http://10.100.102.15:3001/check_car", params=data, timeout=5)
+            print('status code: '+ str(backendResponse.status_code))
+            if(backendResponse.status_code == requests.codes.ok):            
+                if((backendResponse.json()['status']) == 1):
+                    print('-- Car Number: '+ carNumber+' are allowed! --')
+                    SetLedGreen()
+                else:
+                    print('-- Car Number: '+ carNumber+' are not allowed! --')
+            else:
+                print('Error with status code:'+ str(backendResponse.status_code))       
+        except requests.ConnectionError or requests.ConnectTimeout:
+            print('Error - Timeout')
         rt.start()
     
 print('Starting...')
