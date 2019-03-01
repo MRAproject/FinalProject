@@ -5,6 +5,8 @@ import NimageProcessing
 import delete
 import threading
 from threading import Timer
+import requests
+from pprint import pprint
 
 class RepeatedTimer(object):
     def __init__(self, interval, function, *args, **kwargs):
@@ -42,28 +44,36 @@ camera = PiCamera()
 FOLDER = 'Camera samples/'
 
 def Work():
-    print('insert')
-    for i in range(2):    
+    print('Take 3 pic..')
+    for i in range(3):    
         output = strftime(FOLDER+'image-'+str(i)+'.jpeg')
         camera.capture(output)
-        
-    response = NimageProcessing.Work(FOLDER)
-    print(response)
-    if(response != None):
+    
+    print('Processing images..')
+    carNumber = NimageProcessing.Work(FOLDER)
+    if(carNumber != None):
         rt.stop()
-        '''
-        backendResponse = #requst To Backend
-        if(backendResponse == 1):
-            SetLedGreen() #car are allowed
-        #else -> SetLedRed() are already working    
+        data = {"carNumber": carNumber}
+        print('car number:' + carNumber)
+        backendResponse = requests.get("http://10.100.102.15:3001/check_car", params=data)
+        print(backendResponse)
+        if(backendResponse.status_code == requests.codes.ok):            
+            if((backendResponse.json()['status']) == 1):
+                SetLedGreen()
+        else:
+            print('Car Number: '+ carNumber+' are not allowed!')
         rt.start()
-        '''
     
-print('starting...')
-rt = RepeatedTimer(14, Work) # it auto-starts, no need of rt.start()
+print('Starting...')
+rt = RepeatedTimer(17, Work) # it auto-starts, no need of rt.start()
 try:
-    sleep(10000000) # your long-running job goes here...
+    sleep(1000000) # your long-running job goes here...
 finally:
-    rt.stop() # better in a try/finally block to make sure the program ends!
+    rt.stop()
+
+
     
+#pprint(backendResponse.json())
+#pprint(backendResponse.json()['status'])
+
 

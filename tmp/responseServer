@@ -1,0 +1,35 @@
+'''
+def Work():
+    print('insert')
+    for i in range(3):    
+        output = strftime(folder+'image-'+str(i)+'.jpeg')
+        camera.capture(output)
+        
+    response = NimageProcessing.Work(folder)
+    print(response)
+    if(response != None):
+        rt.stop()
+        backendResponse = requests.get(http://192.168.56.1:3001/check_car?carNumber=response)
+        print(backendResponse)
+        '''
+        backendResponse = #requst To Backend
+        if(backendResponse == 1):
+            SetLedGreen() #car are allowed
+        #else -> SetLedRed() are already working    
+        rt.start()
+        '''
+    
+print('starting...')
+rt = RepeatedTimer(13, Work) # it auto-starts, no need of rt.start()
+try:
+    sleep(1000000) # your long-running job goes here...
+finally:
+    rt.stop()
+''' 
+
+
+#response = '3330023'
+#data = {"carNumber": "3330023"}
+#10.100.102.13:3001
+#backendResponse = requests.get("http://10.100.102.15:3001/check_car", params=data)
+#print(backendResponse.url)  
